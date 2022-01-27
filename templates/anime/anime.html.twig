@@ -11,10 +11,21 @@
 {% endblock %}
 
 {% block body %}
-<section class="letout">
-    <h2> {{ anime.name}} </h2>
-    <p class="firstp"> {{ anime.description}} </p> <br>
-    <p> Note de l'anime : {{ anime.score }}/10 </p>
-    <p> Nombre de votant : {{ anime.votersnumber }} </p>
-</section>
+
+    <section class="letout">
+        <h2> {{ anime.name}} </h2>
+        <p class="firstp"> {{ anime.description}} </p> <br>
+        <p> Note de l'anime : {{ anime.score }}/10 </p>
+        <p> Nombre de votant : {{ anime.votersnumber }} </p>
+        
+        {{ form(delete) }}
+
+        {# {{ form_label(form.pwd, 'Mdp admin*') }}
+        {{ form_widget(form.pwd, { 'attr': {'required': 'true'}}) }} #}
+
+        {# {{ form_end(form) }} #}
+
+        
+    </section>
+
 {% endblock %}
