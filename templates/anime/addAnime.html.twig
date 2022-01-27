@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block stylesheets %}
+    <style> 
+        .formulaireAnime { margin: 5% 5% 5% 5%;}
+        h2 { text-align: center; margin-top: 10vh;}
+        label, button {margin-top: 20px;}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h2>Ajouter un Animé </h2>
+    <div class="formulaireAnime">
+        {{ form_start(form) }}
+        
+            {{ form_label(form.name, 'Nom de l\'anime*') }}
+            {{ form_widget(form.name, { 'attr': {'required': 'true'}}) }}
+
+            {{ form_label(form.email, 'Votre email*') }}
+            {{ form_widget(form.email, { 'attr': {'required': 'true'}}) }}
+
+            {{ form_label(form.score, 'Combien donnez vous à l\'anime*') }}
+            {{ form_widget(form.score, { 'attr': {'required': 'true'}}) }}
+
+            <button type="submit" class="btn btn-success">Enregistrer</button>
+            {% block error %} {% endblock %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

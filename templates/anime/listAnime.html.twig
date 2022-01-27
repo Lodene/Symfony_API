@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        .all { justify-content: center; }
+        .block {  margin: 5% 10% 0% 10%; height: 200px;}
+        h2, p, a{ text-align: center;}
+    </style>
+{% endblock %}
+
+{% block body %}
+<section class="all">
+    {% for anime in animes %}
+        <div class="block">
+            <h2> {{ anime.name }} <br> </h2>
+            <p> 
+                {{ anime.description }} <br> <br>
+                <a href="{{ path('anime', {'id' : anime.id}) }}" class="btn btn-primary">Lire la suite </a>
+            </p>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

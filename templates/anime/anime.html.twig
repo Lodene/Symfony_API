@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        .letout { margin: 5% 5% 5% 5%;}
+        h2, .firstp { text-align: center;}
+        p { font-size: 25px; }
+        h2 { font-size: 50px; }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+<section class="letout">
+    <h2> {{ anime.name}} </h2>
+    <p class="firstp"> {{ anime.description}} </p> <br>
+    <p> Note de l'anime : {{ anime.score }}/10 </p>
+    <p> Nombre de votant : {{ anime.votersnumber }} </p>
+</section>
+{% endblock %}
