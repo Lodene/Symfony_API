@@ -18,8 +18,7 @@ class AnimeType extends AbstractType
             ->add('email', TextType::class, ['mapped' => false]);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
+    public function configureOptions(OptionsResolver $resolver): void{
         $resolver->setDefaults([
             'data_class' => Anime::class,
         ]);

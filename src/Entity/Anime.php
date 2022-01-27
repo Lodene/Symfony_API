@@ -25,6 +25,8 @@ class Anime
     #[ORM\Column(type: 'float', nullable: true)]
     private $votersNumber;
 
+    private $brochureFilename;
+
 
     public function getId(): ?int
     {
@@ -75,6 +77,18 @@ class Anime
     public function setVotersNumber(float $votersNumber): self
     {
         $this->votersNumber = $votersNumber;
+
+        return $this;
+    }
+
+    public function getBrochureFilename()
+    {
+        return $this->brochureFilename;
+    }
+
+    public function setBrochureFilename($brochureFilename)
+    {
+        $this->brochureFilename = $brochureFilename;
 
         return $this;
     }

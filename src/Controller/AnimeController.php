@@ -10,17 +10,15 @@ use App\Repository\AnimeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\AnimeType;
-use Symfony\Flex\Path;
+use App\Form\ImportCsvForm;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Serializer\Serializer;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+
 
 class AnimeController extends AbstractController{
     #[Route('/', name: 'home')]
@@ -42,9 +40,36 @@ class AnimeController extends AbstractController{
     }
 
     #[Route('/importAnime', name: 'importAnime')]
-    public function importAnime(SerializerInterface $serializer): Response{
+    public function importAnime(Request $request): Response{
+        // instantiation, when using it as a component
+        $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
+        $form = $this->createFormBuilder([])->add('FileCsv', FileType::class, [
+            'label' => 'Brochure (CSV file)',
+            'mapped' => false,
+            'required' => false,
+            'constraints' => [
+                new File([
+                    'maxSize' => '1024k',
+                    'mimeTypes' => [
+                        'text/csv'
+                    ],
+                    'mimeTypesMessage' => 'Please upload a valid CSV document',
+                ])
+            ],
+        ])->getForm();
 
-        return $this->render('anime/importAnime.html.twig');
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $formImport = $form->get('FileCsv')->getData();
+            dd($formImport);
+        }
+
+        // decoding CSV contents
+        $data = $serializer->decode(file_get_contents('data.csv'), 'csv');
+        return $this->render('anime/importAnime.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/statistiquesAnime', name: 'stats')]
